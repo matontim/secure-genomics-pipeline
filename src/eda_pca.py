@@ -43,6 +43,32 @@ print(df.describe())
 # FPKM data must be log transformed for PCA
 log2expr = np.log2(df + 1)  # log2(FPKM + 1) transformation
 
+# QC plots
+
+# Boxplot 
+plt.boxplot(log2expr, showfliers=False)
+plt.xlabel("Samples")
+plt.ylabel("Log2(FPKM + 1)")
+plt.title("Per-Sample Expression Distributions After Log Transformation")
+plt.tight_layout()
+plt.grid(axis='y', alpha=0.3)
+plt.savefig("results/figures/boxplot_log2_expression.png")
+plt.close()
+
+# Violin plot
+
+sub = log2expr.sample(n=2000, random_state=42)
+
+plt.figure(figsize=(8,4))
+plt.violinplot(sub.values, showextrema=False)
+plt.xlabel("Samples")
+plt.ylabel("Log2(FPKM + 1)")
+plt.title("Expression Distributions Across Samples (QC)")
+plt.tight_layout()
+plt.ylim(0, 5)
+plt.savefig("results/figures/violinplot_log2_expression.png")
+plt.close()
+
 # Transpose data to have samples as rows and genes as columns
 log2expr_T = log2expr.T     
 
@@ -53,6 +79,9 @@ plt.hist(log2expr_T.values.flatten(), bins=50)
 plt.title("Distribution of Log-transformed Expression Values")
 plt.xlabel("Log2(FPKM + 1)")
 plt.ylabel("Frequency")
+plt.tight_layout()
+plt.savefig("results/figures/log2_expression_distribution.png")
+plt.close()
 
 # Scale the data
 scaler = StandardScaler()
