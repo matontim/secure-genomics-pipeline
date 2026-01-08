@@ -27,13 +27,44 @@ metadata_rows = ['Chromosome', 'Start', 'Stop', 'Length', 'Strand', 'Gene Symbol
 df = df.drop(columns=metadata_rows)
 
 print(df.head())
+print("Dataset shape after dropping metadata columns:", df.shape)
 
-#Transpose so rows are samples and columns are genes
-df_t = df.T
+# Raw QC to catch parsing errors or missing values
 
-print("Transposed DataFrame shape:", df_t.shape)
-print(df.T.head())
+# Ensure numeric
+df = df.apply(pd.to_numeric, errors='coerce')
 
-#Scale the data
+# Check for missing values 
+print("Missing values:", df.isna().sum().sum()) 
+
+# Check basic stats
+print(df.describe())
+
+# FPKM data must be log transformed for PCA
+log2expr = np.log2(df + 1)  # log2(FPKM + 1) transformation
+
+# Transpose data to have samples as rows and genes as columns
+log2expr_T = log2expr.T     
+
+print("Log2 transformed data shape:", log2expr_T.shape )
+
+# Post transform QC making sure log transform behaves as expected
+plt.hist(log2expr_T.values.flatten(), bins=50)
+plt.title("Distribution of Log-transformed Expression Values")
+plt.xlabel("Log2(FPKM + 1)")
+plt.ylabel("Frequency")
+
+# Scale the data
 scaler = StandardScaler()
-df_scaled = scaler.fit_transform(df_t)
+scaled_T = scaler.fit_transform(log2expr_T)
+
+# PCA with multiple components
+pca = PCA(n_components=8)
+pca_T = pca.fit_transform(scaled_T)
+
+# Explained variance
+explained_var = pca.explained_variance_ratio_
+print("Explained variance ratios:", pca.explained_variance_ratio_)
+
+# Save PCA scores
+pd.DataFrame(pca_T, columns=[f'PC{i+1}' for i in range(pca_T.shape[1])], index=log2expr_T.index).to_csv("results/pca_scores.csv")
