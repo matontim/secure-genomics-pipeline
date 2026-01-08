@@ -68,3 +68,6 @@ print("Explained variance ratios:", pca.explained_variance_ratio_)
 
 # Save PCA scores
 pd.DataFrame(pca_T, columns=[f'PC{i+1}' for i in range(pca_T.shape[1])], index=log2expr_T.index).to_csv("results/pca_scores.csv")
+
+# Save explained variance
+pd.DataFrame({'PC': range(1, len(explained_var) + 1), 'ExplainedVariance': explained_var}).to_csv("results/pca_explained_variance.csv", index=False)
