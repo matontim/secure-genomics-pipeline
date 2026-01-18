@@ -43,6 +43,11 @@ print(df.describe())
 # FPKM data must be log transformed for PCA
 log2expr = np.log2(df + 1)  # log2(FPKM + 1) transformation
 
+# Save for downstream analysis
+log2expr.to_csv("data/processed/log2_expression.csv")
+
+print("Saved processed expression matrix to data/processed")
+
 # QC plots
 
 # Boxplot 
