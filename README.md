@@ -18,14 +18,17 @@ REPO STRUCTURE
 
 NOTEBOOKS
 01_exploratory_analysis
+    Performed initial inspection and normalization of the expression matrix and explored global variance structure. Goals were to identify large-scale variance patterns, verify normalization behavior, and provide initial assessment of treatment effects.
 02_stats_and_DE
-    Differential expression was assess across four breast cancer cell lines, comparing MBE1.5 treatment to DMSO controls within each cell line. Log2 fold changes were computed as the mean paired difference, and significance was assessed using a paired t-test
+    Differential expression was assessed across four breast cancer cell lines, comparing MBE1.5 treatment to DMSO controls within each cell line. Log2 fold changes were computed as the mean paired difference, and significance was assessed using a paired t-test
+03_pca_analysis
+    Validated PCA results using R to demonstrate cross-language reproducibility. Confirmed that observed variance structure is not dependent on a specific software system.
+04_security_demo
+    Demonstrated basic secure data handling concepts relevant to genomic workflows. Demonstrated hashing and encryption to show awareness of data integrity and secure computational practices.
 
 TOOLS:
-Python, pandas, numpy, matplotlib, scikit-learn, Git
+Python, R, pandas, numpy, matplotlib, scikit-learn, Git
 
 NOTES & LIMITATIONS:
-
--Exploratory Analysis 
--Stats and DE
     Sample grouping was derived from GEO Series metadata describing treatment with both MBE1.5 and DMSO control across four breast cancer cell lines. Due to limited sample size, differential expression analysis serves as methodological demonstration for educational purposes. More robust methods, such as DESeq2, are used for definitive biological inference.
+    The secueity demonstration is conceptual and educational,not a production deployment.
