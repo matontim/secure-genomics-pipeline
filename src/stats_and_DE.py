@@ -67,10 +67,11 @@ de_results = pd.DataFrame(
 de_results['adj_pval'] = (de_results['pval'].rank(method='min') / len(de_results))
 
 # Create significance column
-log2FC_thresh = 1
+log2FC_thresh = 0.5
 padj_thresh = 0.05
 
 de_results["significance"] = "Not Significant"
+
 
 de_results.loc[
     (de_results["log2FC"] >= log2FC_thresh) & 
@@ -113,7 +114,7 @@ for category, color in colors.items():
     subset = de_results[de_results['significance'] == category]
     plt.scatter(
         subset['log2FC'],
-        -np.log10(subset['pval']),
+        -np.log10(subset['adj_pval']),
         c=color,
         label=category,
         alpha=0.7
@@ -135,5 +136,5 @@ plt.ylabel('-Log10 Adjusted p-value')
 plt.title('Differential Expression: MBE1.5 vs DMSO')
 plt.legend(frameon=False)
 plt.tight_layout()
-plt.savefig(fig_dir/'volcano_plot.png')
-plt.show()
+plt.savefig(fig_dir/"volcano_plot.png")
+plt.close()
