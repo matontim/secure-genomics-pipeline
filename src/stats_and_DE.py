@@ -84,6 +84,21 @@ de_results.loc[
     "significance"
 ] = "Downregulated"
 
+# Checking reported significant genes
+genes_of_interest = ['CYP1A1', 'CYP1B1']
+
+# Load gene name mapping from raw file
+raw = pd.read_csv(DATA_PATH, sep="\t")
+
+# gene_id is column 8 (index 7), gene_name is column 10 (index 9)
+# Build map from Ensembl ID to gene name directly without set_index
+gene_map = dict(zip(raw.iloc[:, 7], raw['gene_name']))
+
+de_results['gene_name'] = de_results['gene_id'].map(gene_map)
+
+print(de_results[de_results['gene_name'].isin(genes_of_interest)]
+      [['gene_name', 'log2FC', 'pval', 'adj_pval', 'significance']])
+
 
 # Volcano plot
 colors = {
@@ -103,6 +118,12 @@ for category, color in colors.items():
         label=category,
         alpha=0.7
     )
+
+for _, row in de_results[de_results['gene_name'].isin(genes_of_interest)].iterrows():
+    plt.annotate(row['gene_name'],
+                 xy=(row['log2FC'], -np.log10(row['adj_pval'])),
+                 xytext=(5, 5), textcoords='offset points',
+                 fontsize=8, color='darkred')
 
 # Threshold lines
 plt.axvline(log2FC_thresh, color='black', linestyle='--', linewidth=1)

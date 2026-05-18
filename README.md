@@ -36,8 +36,8 @@ TOOLS:
     Python, R, pandas, numpy, matplotlib, scikit-learn, Git
 
 COMPARISON TO PUBLISHED FINDINGS:
-    Calculated PCA scores PC1: 32.9%, PC2: 25.3%, PC3: 23.2% closely match the experimental PCA scores of PC1: 32.46%, PC2: 25.63% [Esposito et al., 2025, iScience 28, 113675]. In accordance with experimental findings, clustering observed in PCA is due to cell line grouping rather than treatment with MBE.15 or DMSO. 
+    Calculated PCA scores PC1: 32.9%, PC2: 25.3%, PC3: 23.2% closely match the experimental PCA scores of PC1: 32.46%, PC2: 25.63% [Esposito et al., 2025, iScience 28, 113675]. In accordance with experimental findings, clustering observed in PCA is due to cell line grouping rather than treatment with MBE.15 or DMSO. CYP1A1 and CYP1B1 appear as top upregulated genes, consistent with Esposito et al. (2025) which identified these as off-target aryl hydrocarbon receptor responses to MBE1.5. The absence of other significant hits corroborates the paper's conclusion that ALDH1A3 inhibition produces no cell-intrinsic transcriptomic response in these retinoid-insensitive cell lines.
 
 NOTES & LIMITATIONS:
     Sample grouping was derived from GEO Series metadata describing treatment with both MBE1.5 and DMSO control across four breast cancer cell lines. Due to limited sample size, differential expression analysis serves as methodological demonstration for educational purposes. More robust methods, such as DESeq2, are used for definitive biological inference.
-    The security demonstration is conceptual and educational,not a production deployment.
+    The security demonstration is conceptual and educational, not a production deployment.
