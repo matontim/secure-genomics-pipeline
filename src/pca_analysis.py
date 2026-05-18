@@ -53,6 +53,7 @@ plt.savefig(fig_dir/"scree_plot.png")
 plt.close()
 
 # Add cumulative variance
+plt.figure(figsize=(6,4))
 cum_var = np.cumsum(explained_var) * 100
 plt.plot(range(1, len(cum_var) + 1), cum_var, marker='s', color='orange')
 plt.axhline(80, linestyle='--', color='red', label='80% Variance')
@@ -68,19 +69,62 @@ plt.close()
 pca2 = PCA(n_components=2)
 pcs2 = pca2.fit_transform(scaled_T)
 
-# Create new DataFrame with PCs
-pca_df = pd.DataFrame(data=pcs2, columns=['PC1', 'PC2'], index=log2expr.columns)
-
-# Variance labels
 pc1_var = pca2.explained_variance_ratio_[0] * 100
-pc2_var = pca2.explained_variance_ratio_[1] * 100   
+pc2_var = pca2.explained_variance_ratio_[1] * 100
 
-# Plot 
-plt.figure(figsize=(6,5))
-plt.scatter(pca_df['PC1'], pca_df['PC2'], s=50)
-plt.xlabel(f'PC1 ({pc1_var:.1f}% variance)')
-plt.ylabel(f'PC2 ({pc2_var:.1f}% variance)')
-plt.title('PCA of GSE260586 Expression Data')
+# Create new DataFrame with PCs
+pca_df = pd.DataFrame(data=pcs2, columns=['PC1', 'PC2'], index=log2expr_T.index)
+
+# Sample mapping from GEO GSE260586
+sample_metadata = {
+    'r542': ('HCC1937',    'DMSO',   True),
+    'r543': ('HCC1937',    'MBE1.5', True),
+    'r544': ('SUM159-M1a', 'DMSO',   True),
+    'r545': ('SUM159-M1a', 'MBE1.5', True),
+    'r546': ('MDA-468',    'DMSO',   True),
+    'r547': ('MDA-468',    'MBE1.5', True),
+    'r548': ('1833TR-p94', 'DMSO',   False),
+    'r549': ('1833TR-p94', 'MBE1.5', False),
+}
+pca_df['CellLine']  = [sample_metadata[s][0] for s in pca_df.index]
+pca_df['Treatment'] = [sample_metadata[s][1] for s in pca_df.index]
+pca_df['ALDH1A3+']  = [sample_metadata[s][2] for s in pca_df.index]
+
+color_map = {
+    'HCC1937':    'steelblue',
+    'SUM159-M1a': 'darkorange',
+    'MDA-468':    'green',
+    '1833TR-p94': 'red'       
+}
+marker_map = {'DMSO': 'o', 'MBE1.5': '^'}
+
+fig, ax = plt.subplots(figsize=(7, 5))
+
+for sample, row in pca_df.iterrows():
+    ax.scatter(row['PC1'], row['PC2'],
+               color=color_map[row['CellLine']],
+               marker=marker_map[row['Treatment']],
+               s=120, zorder=3)
+    ax.annotate(f"{row['CellLine']}\n{row['Treatment']}",
+                (row['PC1'], row['PC2']),
+                textcoords='offset points',
+                xytext=(6, 4), fontsize=7)
+
+# Cell line legend entries
+for cl, col in color_map.items():
+    aldh = '+' if cl != '1833TR-p94' else '−'
+    ax.scatter([], [], color=col, marker='o',
+               label=f'{cl} (ALDH1A3{aldh})', s=80)
+
+# Treatment legend entries
+for tr, mk in marker_map.items():
+    ax.scatter([], [], color='gray', marker=mk, label=tr, s=80)
+
+ax.set_xlabel(f'PC1 ({pc1_var:.1f}% variance)')
+ax.set_ylabel(f'PC2 ({pc2_var:.1f}% variance)')
+ax.set_title('PCA of GSE260586')
+ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=8)
+ax.grid(alpha=0.3)
 plt.tight_layout()
-plt.savefig(fig_dir/"pca_scatter.png")
+plt.savefig(fig_dir/"pca_labeled.png", bbox_inches='tight')
 plt.show()
