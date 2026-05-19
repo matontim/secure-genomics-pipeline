@@ -1,14 +1,15 @@
 # Secure Genomic Data Analysis 
 
 ## OVERVIEW:
-RNA-seq analysis workflow demonstrating QC and exploratory analysis, normalization PCA, basic differential exploration, and a short data integrity demo. 
+This project explores transcriptomic changes associated with ALDH1A3 inhibition in breast cancer cell lines using an RNA-seq analysis workflow built in Python and R. The pipeline includes quality control, normalization, principal component analysis (PCA), differential expression analysis, and a short data integrity demonstration for secure genomics workflows. ALDH1A3 is an enzyme involved in retinoic acid synthesis and has been linked to tumor progression and immune suppression in several cancers. Recent work suggests that ALDH1A3-derived retinoic acid may suppress anti-tumor immune responses through paracrine signaling rather than directly affecting tumor cell growth. Using publicly available RNA-seq data from ALDH1A3 inhibition experiments, this project investigates how blocking ALDH1A3 alters gene expression patterns and compares findings against published results from Esposito et al. (2025).
 
 ## PROJECT GOALS:
-- Demonstrate QC, normalization PCA, and basic DE analysis on a small public dataset
+- Demonstrate QC, normalization, PCA, and basic DE analysis on a small public dataset
 - Show simple data integrity and encryption demonstration for secure genomics workflows
+- Compare results with published findings from Esposito et al. (2025).
 
 ## BIOLOGICAL CONTEXT: 
-Aldehyde dehydrogenase 1a3 (ALDH1A3) converts retinaldehyde into all-trans retinoic acid (atRA) which was historically assumed to suppress tumors. This study shows that ALDH1A3-expressing cancers lose sensitivity to retinoid signaling. Instead, the atRA produced by ALDH1A3 acts in a paracrine fashion to suppress anti-tumor immunity rather than acting on the tumor cells themselves. The researchers developed MBE1.5, an ALDH1A3 inhibitor, to observe how ALDH1A3 inhibition changes gene expression in cancer cell lines (Esposito et al., 2025, iScience 28, 113675).
+ALDH1A3 converts retinaldehyde into all-trans retinoic acid (atRA), a signaling molecule historically associated with tumor suppression. However, recent evidence suggests that ALDH1A3-expressing tumors may become resistant to retinoid signaling while still using atRA to suppress anti-tumor immunity in the tumor microenvironment. In the referenced study, researchers developed the ALDH1A3 inhibitor MBE1.5 to investigate how ALDH1A3 inhibition reshapes gene expression in cancer cells (Esposito et al., 2025, iScience 28, 113675).
 
 ## EXPERIMENTAL DESIGN: 
 Four breast cancer cell lines - MDA-MB-468, SUM159-M1a, and HCC1937 (ALDH1A3 positive) and 1833TR-p94 (ALDH1A3 negative) - were treated with inhibitor MBE1.5 vs 0.1% DMSO control for 9 hours. Total RNA was harvested and transcriptome-wide expression was measured by RNA-seq.
@@ -24,13 +25,13 @@ GSE260586 (FPKM+1)
 - 'results/figures/' figures and outputs
 
 ## NOTEBOOKS
-1. 01_exploratory_analysis
+1. 01_exploratory_analysis:
 Performed initial inspection and normalization of the expression matrix and explored global variance structure. Goals were to identify large-scale variance patterns, verify normalization behavior, and provide initial assessment of treatment effects. 
-2. 02_stats_and_DE
+2. 02_stats_and_DE:
 Differential expression was assessed across four breast cancer cell lines, comparing MBE1.5 treatment to DMSO controls within each cell line. Log2 fold changes were computed as the mean paired difference, and significance was assessed using a paired t-test.
-3. 03_pca_analysis
+3. 03_pca_analysis:
 Validated PCA results using R to demonstrate cross-language reproducibility. Confirmed that observed variance structure is not dependent on a specific software system.
-4. 04_security_demo
+4. 04_security_demo:
 Demonstrated basic secure data handling concepts relevant to genomic workflows. Demonstrated hashing and encryption to show awareness of data integrity and secure computational practices.
 
 ## TOOLS:
