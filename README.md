@@ -46,6 +46,11 @@ CYP1A1 and CYP1B1 appear as top upregulated genes, consistent with experimental 
 
 ![Volcano plot MBE1.5 vs DMSO](results/figures/volcano_plot.png)
 
+## Notes and Limitations
+- Sample grouping was derived from GEO Series metadata describing treatment with both MBE1.5 and DMSO control across four breast cancer cell lines
+- Due to limited sample size, differential expression analysis serves as methodological demonstration for educational purposes. With only 2 replicates per condition per cell line, statistical power is limited. This analysis serves as a methodological demonstration; definitive biological inference would require DESeq2 or edgeR with more replicates
+- The security demonstration is conceptual and educational, not a production deployment
+
 ## Key Takeaways
  
 - PCA scores (PC1: 32.9%, PC2: 25.3%) closely matched published values, confirming the pipeline was implemented correctly on publicly available data.
@@ -54,9 +59,6 @@ CYP1A1 and CYP1B1 appear as top upregulated genes, consistent with experimental 
 - Cross-language validation (Python + R) confirmed results are not dependent on a specific computational tool.
 - The security notebook highlights data integrity and encryption as important considerations for any pipeline handling patient-adjacent genomic data.
 - **Future direction:** Apply more robust methods (DESeq2, edgeR) with additional replicates, and expand to ALDH1A3-positive immune cell co-culture models to investigate the paracrine immunosuppression hypothesis directly.
-
-## NOTES & LIMITATIONS:
-Sample grouping was derived from GEO Series metadata describing treatment with both MBE1.5 and DMSO control across four breast cancer cell lines. Due to limited sample size, differential expression analysis serves as methodological demonstration for educational purposes. More robust methods, such as DESeq2, are used for definitive biological inference. The security demonstration is conceptual and educational, not a production deployment.
 
 ## Citations
 1. Esposito M, Fang C, Wei Y, Pozzan A, Beato C, Su X, Hutton JE III, Reed T, Hang X, Perini ED, Wang W, Cheng X, Pan Y, Yu J, Kane M, Manoharan M, Proudfoot J, Cristea IM, Kang Y. Development of retinoid nuclear receptor pathway antagonists through targeting aldehyde dehydrogenase 1A3. *iScience*. 2025;28:113675. https://doi.org/10.1016/j.isci.2025.113675
