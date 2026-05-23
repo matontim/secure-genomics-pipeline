@@ -1,30 +1,30 @@
 # Secure Genomic Data Analysis 
 
-## OVERVIEW:
+## Overview
 This project explores transcriptomic changes associated with ALDH1A3 inhibition in breast cancer cell lines using an RNA-seq analysis workflow built in Python and R. The pipeline includes quality control, normalization, principal component analysis (PCA), differential expression analysis, and a short data integrity demonstration for secure genomics workflows. ALDH1A3 is an enzyme involved in retinoic acid synthesis and has been linked to tumor progression and immune suppression in several cancers. Recent work suggests that ALDH1A3-derived retinoic acid may suppress anti-tumor immune responses through paracrine signaling rather than directly affecting tumor cell growth. Using publicly available RNA-seq data from ALDH1A3 inhibition experiments, this project investigates how blocking ALDH1A3 alters gene expression patterns and compares findings against published results from Esposito et al. (2025).
 
-## PROJECT GOALS:
+## Project Goals
 - Demonstrate QC, normalization, PCA, and basic DE analysis on a small public dataset
 - Show simple data integrity and encryption demonstration for secure genomics workflows
 - Compare results with published findings from Esposito et al. (2025).
 
-## BIOLOGICAL CONTEXT: 
+## Biological Context
 ALDH1A3 converts retinaldehyde into all-trans retinoic acid (atRA), a signaling molecule historically associated with tumor suppression. However, recent evidence suggests that ALDH1A3-expressing tumors may become resistant to retinoid signaling while still using atRA to suppress anti-tumor immunity in the tumor microenvironment. In the referenced study, researchers developed the ALDH1A3 inhibitor MBE1.5 to investigate how ALDH1A3 inhibition reshapes gene expression in cancer cells (Esposito et al., 2025, iScience 28, 113675).
 
-## EXPERIMENTAL DESIGN: 
+## Experimental Design
 Four breast cancer cell lines - MDA-MB-468, SUM159-M1a, and HCC1937 (ALDH1A3 positive) and 1833TR-p94 (ALDH1A3 negative) - were treated with inhibitor MBE1.5 vs 0.1% DMSO control for 9 hours. Total RNA was harvested and transcriptome-wide expression was measured by RNA-seq.
 
-## DATA: 
+## Data
 GSE260586 (FPKM+1)
 
-## REPO STRUCTURE
+## Repo Structure
 - 'data/raw/' raw input files (GSE260586_FPKM+1.txt)
 - 'data/processed/' Log2 expression data
 - 'notebooks/' Jupyter notebooks
 - 'src/' scripts
 - 'results/figures/' figures and outputs
 
-## NOTEBOOKS
+## Notebooks
 1. 01_exploratory_analysis:
 Performed initial inspection and normalization of the expression matrix and explored global variance structure. Goals were to identify large-scale variance patterns, verify normalization behavior, and provide initial assessment of treatment effects. 
 2. 02_stats_and_DE:
@@ -34,10 +34,10 @@ Validated PCA results using R to demonstrate cross-language reproducibility. Con
 4. 04_security_demo:
 Demonstrated basic secure data handling concepts relevant to genomic workflows. Demonstrated hashing and encryption to show awareness of data integrity and secure computational practices.
 
-## TOOLS:
+## Tools
 Python, R, pandas, numpy, scipy, matplotlib, scikit-learn, Git
 
-## COMPARISON TO PUBLISHED FINDINGS:
+## Comparison to Published Findings
 Calculated PCA scores (PC1: 32.9%, PC2: 25.3%) closely match published values (PC1: 32.46%, PC2: 25.63%) (Esposito et al., 2025, iScience 28, 113675). Consistent with Figure 4E of the paper, clustering observed in PCA is due to cell line grouping rather than treatment with MBE1.5 or DMSO. 
 
 ![PCA labeled by cell line and treatment](results/figures/pca_labeled.png)
